@@ -7,7 +7,12 @@ import { usePatchStore } from '@/stores/usePatchStore';
 import { updateCanvas } from '@/lib/canvas/layers';
 import { CANVAS_WIDTH, CANVAS_HEIGHT } from '@/lib/constants';
 
-const PatchCanvasInner = () => {
+interface PatchCanvasProps {
+    triggerExport?: number;
+    onExport?: (dataUrl: string) => void;
+}
+
+const PatchCanvasInner = ({ triggerExport, onExport }: PatchCanvasProps) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricRef = useRef<Canvas | null>(null);
 
@@ -69,6 +74,15 @@ const PatchCanvasInner = () => {
         });
 
     }, [shape, material, size, backgroundColor, borderColor, userImageDataUrl]); // Re-run only on visual changes
+
+    // 3. Handle Export Trigger
+    useEffect(() => {
+        if (triggerExport && onExport && fabricRef.current) {
+            // High-res export (multiplier 2x = 1000x1000px)
+            const dataUrl = fabricRef.current.toDataURL({ format: 'png', multiplier: 2, enableRetinaScaling: true });
+            onExport(dataUrl);
+        }
+    }, [triggerExport, onExport]);
 
     return (
         <div className="relative w-full max-w-[500px] mx-auto aspect-square bg-gray-100 rounded-lg shadow-sm overflow-hidden border border-border">
