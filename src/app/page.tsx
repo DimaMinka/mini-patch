@@ -76,13 +76,11 @@ export default function Home() {
             </div>
 
             {/* Main Canvas Area (Desktop: Center, Mobile: Order 1) */}
-            <div className="order-1 lg:order-2 flex-col flex bg-muted/30 relative overflow-hidden">
-                <div className="flex-1 flex items-center justify-center p-4 min-h-[400px] lg:min-h-0">
-                    <PatchCanvas
-                        triggerExport={triggerExport}
-                        onExport={handleCanvasExport}
-                    />
-                </div>
+            <div className="order-1 lg:order-2 flex flex-col items-center justify-center bg-muted/30 relative overflow-hidden p-4 min-h-[400px] lg:min-h-0">
+                <PatchCanvas
+                    triggerExport={triggerExport}
+                    onExport={handleCanvasExport}
+                />
             </div>
 
             {/* Price Panel (Desktop: Right Col, Mobile: Order 3 Sticky?) */}

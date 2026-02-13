@@ -85,7 +85,7 @@ const PatchCanvasInner = ({ triggerExport, onExport }: PatchCanvasProps) => {
     }, [triggerExport, onExport]);
 
     return (
-        <div className="relative w-full max-w-[500px] mx-auto aspect-square bg-gray-100 rounded-lg shadow-sm overflow-hidden border border-border">
+        <div className="relative w-full max-w-[500px] aspect-square bg-gray-100 rounded-lg shadow-sm overflow-hidden border border-border">
             <canvas ref={canvasRef} className="w-full h-full" />
         </div>
     );

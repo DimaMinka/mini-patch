@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -119,10 +118,23 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
-    @apply bg-background text-foreground;
   }
+}
+
+/* Fabric.js Responsive Fixes */
+.canvas-container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.lower-canvas,
+.upper-canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
