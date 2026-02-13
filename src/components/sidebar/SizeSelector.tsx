@@ -18,10 +18,12 @@ export const SizeSelector = () => {
                 {Object.entries(SIZE_PRESETS).map(([key, preset]) => (
                     <Button
                         key={key}
-                        variant={'outline'}
+                        variant="outline"
                         className={cn(
-                            "h-14 flex flex-col items-center justify-center gap-0.5",
-                            isSelected(preset) && "border-2 border-primary bg-primary/5"
+                            "h-14 flex flex-col items-center justify-center gap-0.5 transition-all text-foreground",
+                            isSelected(preset)
+                                ? "border-2 border-primary bg-primary/5 text-primary shadow-sm"
+                                : "text-muted-foreground hover:text-foreground"
                         )}
                         onClick={() => setSize(preset)}
                     >

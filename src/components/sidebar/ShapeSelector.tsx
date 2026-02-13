@@ -21,10 +21,12 @@ export const ShapeSelector = () => {
                 {SHAPES.map(({ value, label, Icon }) => (
                     <Button
                         key={value}
-                        variant={currentShape === value ? 'default' : 'outline'}
+                        variant="outline"
                         className={cn(
-                            "h-20 flex flex-col items-center justify-center gap-2",
-                            currentShape === value && "ring-2 ring-primary bg-primary/5 border-primary"
+                            "h-20 flex flex-col items-center justify-center gap-2 transition-all",
+                            currentShape === value
+                                ? "border-2 border-primary bg-primary/5 text-primary shadow-sm"
+                                : "text-muted-foreground hover:text-foreground"
                         )}
                         onClick={() => setShape(value)}
                     >

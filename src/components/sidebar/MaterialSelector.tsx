@@ -17,10 +17,12 @@ export const MaterialSelector = () => {
                     return (
                         <Button
                             key={material}
-                            variant={currentMaterial === material ? 'default' : 'outline'}
+                            variant="outline"
                             className={cn(
-                                "justify-start h-10 px-4",
-                                currentMaterial === material && "bg-primary text-primary-foreground"
+                                "justify-start h-10 px-4 transition-all text-foreground",
+                                currentMaterial === material
+                                    ? "border-2 border-primary bg-primary/5 text-primary font-semibold shadow-sm"
+                                    : "text-muted-foreground hover:text-foreground"
                             )}
                             onClick={() => setMaterial(material)}
                         >
