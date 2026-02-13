@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import type { PatchShape, PatchMaterial, PatchSize, PatchConfig } from '@/lib/types/patch';
 import {
     DEFAULT_SHAPE,
@@ -35,17 +36,24 @@ const DEFAULT_CONFIG: PatchConfig = {
     userImageDataUrl: null,
 };
 
-export const usePatchStore = create<PatchStore>((set) => ({
-    ...DEFAULT_CONFIG,
-    dir: 'ltr',
+export const usePatchStore = create<PatchStore>()(
+    persist(
+        (set) => ({
+            ...DEFAULT_CONFIG,
+            dir: 'ltr',
 
-    setShape: (shape) => set({ shape }),
-    setMaterial: (material) => set({ material }),
-    setSize: (size) => set({ size }),
-    setBackgroundColor: (color) => set({ backgroundColor: color }),
-    setBorderColor: (color) => set({ borderColor: color }),
-    setQuantity: (qty) => set({ quantity: Math.max(1, qty) }),
-    setUserImage: (dataUrl) => set({ userImageDataUrl: dataUrl }),
-    toggleDir: () => set((state) => ({ dir: state.dir === 'ltr' ? 'rtl' : 'ltr' })),
-    reset: () => set({ ...DEFAULT_CONFIG, dir: 'ltr' }),
-}));
+            setShape: (shape) => set({ shape }),
+            setMaterial: (material) => set({ material }),
+            setSize: (size) => set({ size }),
+            setBackgroundColor: (color) => set({ backgroundColor: color }),
+            setBorderColor: (color) => set({ borderColor: color }),
+            setQuantity: (qty) => set({ quantity: Math.max(1, qty) }),
+            setUserImage: (dataUrl) => set({ userImageDataUrl: dataUrl }),
+            toggleDir: () => set((state) => ({ dir: state.dir === 'ltr' ? 'rtl' : 'ltr' })),
+            reset: () => set({ ...DEFAULT_CONFIG, dir: 'ltr' }),
+        }),
+        {
+            name: 'patch-builder-storage',
+        }
+    )
+);
