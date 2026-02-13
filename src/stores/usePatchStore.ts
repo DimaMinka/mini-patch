@@ -13,6 +13,7 @@ import {
 interface PatchStore extends PatchConfig {
     // UI state
     dir: 'ltr' | 'rtl';
+    locale: 'en' | 'ru' | 'he';
 
     // Setters
     setShape: (shape: PatchShape) => void;
@@ -22,7 +23,7 @@ interface PatchStore extends PatchConfig {
     setBorderColor: (color: string) => void;
     setQuantity: (qty: number) => void;
     setUserImage: (dataUrl: string | null) => void;
-    toggleDir: () => void;
+    setLocale: (locale: 'en' | 'ru' | 'he') => void;
     reset: () => void;
 }
 
@@ -41,6 +42,7 @@ export const usePatchStore = create<PatchStore>()(
         (set) => ({
             ...DEFAULT_CONFIG,
             dir: 'ltr',
+            locale: 'en',
 
             setShape: (shape) => set({ shape }),
             setMaterial: (material) => set({ material }),
@@ -49,8 +51,8 @@ export const usePatchStore = create<PatchStore>()(
             setBorderColor: (color) => set({ borderColor: color }),
             setQuantity: (qty) => set({ quantity: Math.max(1, qty) }),
             setUserImage: (dataUrl) => set({ userImageDataUrl: dataUrl }),
-            toggleDir: () => set((state) => ({ dir: state.dir === 'ltr' ? 'rtl' : 'ltr' })),
-            reset: () => set({ ...DEFAULT_CONFIG, dir: 'ltr' }),
+            setLocale: (locale) => set({ locale, dir: locale === 'he' ? 'rtl' : 'ltr' }),
+            reset: () => set({ ...DEFAULT_CONFIG, dir: 'ltr', locale: 'en' }),
         }),
         {
             name: 'patch-builder-storage',

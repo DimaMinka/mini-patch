@@ -1,0 +1,63 @@
+{
+    "header": {
+        "title": "Antigravity Patch"
+    },
+    "sidebar": {
+        "title": "Конфигуратор",
+        "subtitle": "Создайте свой тактический патч",
+        "shapeTitle": "Форма",
+        "shapes": {
+            "shield": "Щит",
+            "circle": "Круг",
+            "rectangle": "Прямоугольник"
+        },
+        "materialTitle": "Материал",
+        "materials": {
+            "cordura": "Кордура 1000D",
+            "pvc": "ПВХ Резина",
+            "embroidery": "Вышивка"
+        },
+        "sizeTitle": "Размер",
+        "designTitle": "Дизайн и Цвета",
+        "backgroundColor": "Цвет фона",
+        "borderColor": "Цвет границы / строчки",
+        "uploadTitle": "Загрузить изображение",
+        "uploadPrompt": "Нажмите для загрузки",
+        "uploadHint": "PNG, JPG (макс. 5МБ)",
+        "uploadDone": "Свое изображение",
+        "uploadStatus": "Загружено",
+        "fileTooLarge": "Файл слишком большой (макс. 5МБ)",
+        "colors": {
+            "Ranger Green": "Зеленый Рейнджер",
+            "Olive Drab": "Оливковый",
+            "Coyote Brown": "Койот Браун",
+            "Tan": "Тан (Песочный)",
+            "Black": "Черный",
+            "Wolf Grey": "Волчий Серый",
+            "Navy Blue": "Темно-синий",
+            "Maroon": "Бордовый"
+        }
+    },
+    "accordion": {
+        "shapeDimensions": "Форма и Размеры",
+        "materialTexture": "Материал и Текстура",
+        "designColors": "Дизайн и Цвета"
+    },
+    "pricing": {
+        "summary": "Итого",
+        "quantity": "Количество",
+        "unitPrice": "Цена за шт.",
+        "bulkDiscount": "Оптовая скидка",
+        "total": "Всего"
+    },
+    "submit": {
+        "button": "Оформить заказ",
+        "processing": "Обработка..."
+    },
+    "language": {
+        "label": "Язык",
+        "en": "English",
+        "ru": "Русский",
+        "he": "עברית"
+    }
+}

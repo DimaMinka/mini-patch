@@ -21,7 +21,12 @@ interface ColorPickerProps {
     allowCustom?: boolean;
 }
 
+import { useTranslations } from 'next-intl';
+
+// ... (TACTICAL_COLORS definition)
+
 export const ColorPicker = ({ label, value, onChange, allowCustom = false }: ColorPickerProps) => {
+    const t = useTranslations('sidebar');
     const dir = usePatchStore((state) => state.dir);
 
     return (
@@ -38,12 +43,12 @@ export const ColorPicker = ({ label, value, onChange, allowCustom = false }: Col
                         )}
                         style={{ backgroundColor: color.value }}
                         onClick={() => onChange(color.value)}
-                        title={color.label}
+                        title={t(`colors.${color.label}`)}
                     >
                         {value === color.value && (
                             <Check className="w-4 h-4 text-white drop-shadow-md" />
                         )}
-                        <span className="sr-only">{color.label}</span>
+                        <span className="sr-only">{t(`colors.${color.label}`)}</span>
                     </Button>
                 ))}
             </div>

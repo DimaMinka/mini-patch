@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Loader2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface SubmitOrderButtonProps {
     onClick: () => void;
@@ -8,6 +9,7 @@ interface SubmitOrderButtonProps {
 }
 
 export const SubmitOrderButton = ({ onClick, isLoading, disabled }: SubmitOrderButtonProps) => {
+    const t = useTranslations('submit');
     return (
         <Button
             className="w-full h-12 text-lg font-semibold shadow-md active:scale-[0.98] transition-all"
@@ -17,10 +19,10 @@ export const SubmitOrderButton = ({ onClick, isLoading, disabled }: SubmitOrderB
             {isLoading ? (
                 <>
                     <Loader2 className="me-2 h-5 w-5 animate-spin" />
-                    Processing...
+                    {t('processing')}
                 </>
             ) : (
-                "Submit Order"
+                t('button')
             )}
         </Button>
     );

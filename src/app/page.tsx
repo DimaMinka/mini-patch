@@ -10,7 +10,11 @@ import { calculatePrice } from '@/lib/pricing/PriceCalculator';
 import type { PatchOrderPayload } from '@/lib/types/patch';
 import { EXTERNAL_PAYMENT_URL } from '@/lib/constants';
 
+import { useTranslations, useFormatter } from 'next-intl';
+
 export default function Home() {
+    const t = useTranslations('pricing');
+    const format = useFormatter();
     const [triggerExport, setTriggerExport] = useState<number>(0);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -45,7 +49,8 @@ export default function Home() {
             console.log('🚀 Order Submitted:', payload);
 
             setTimeout(() => {
-                alert(`Order for ${config.quantity} patches submitted!\nTotal: $${price.totalPrice}`);
+                const formattedTotal = format.number(price.totalPrice, { style: 'currency', currency: 'USD' });
+                alert(`Order for ${config.quantity} patches submitted!\nTotal: ${formattedTotal}`);
                 setIsSubmitting(false);
             }, 800);
 
@@ -75,7 +80,7 @@ export default function Home() {
             <div className="order-3 lg:order-none border-s bg-background flex flex-col lg:h-full lg:min-h-0 relative z-20">
                 <div className="flex-1 p-6 lg:overflow-auto">
                     <div className="space-y-6">
-                        <h2 className="font-semibold text-lg tracking-tight hidden lg:block text-start">Summary</h2>
+                        <h2 className="font-semibold text-lg tracking-tight hidden lg:block text-start">{t('summary')}</h2>
                         <PriceDisplay />
                     </div>
                 </div>

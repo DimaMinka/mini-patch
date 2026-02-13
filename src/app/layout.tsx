@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { RtlProvider } from "@/components/providers/RtlProvider";
+import { LocaleProvider } from "@/components/providers/LocaleProvider";
 import { AppHeader } from "@/components/layout/AppHeader";
 
 const geistSans = Geist({
@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning>
+    <html suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
@@ -36,12 +36,12 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <RtlProvider>
+          <LocaleProvider>
             <div className="relative flex min-h-screen flex-col">
               <AppHeader />
               <main className="flex-1">{children}</main>
             </div>
-          </RtlProvider>
+          </LocaleProvider>
         </ThemeProvider>
       </body>
     </html>

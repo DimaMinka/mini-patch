@@ -1,0 +1,63 @@
+{
+    "header": {
+        "title": "Antigravity Patch"
+    },
+    "sidebar": {
+        "title": "Configuration",
+        "subtitle": "Customize your tactical patch",
+        "shapeTitle": "Shape",
+        "shapes": {
+            "shield": "Shield",
+            "circle": "Circle",
+            "rectangle": "Rectangle"
+        },
+        "materialTitle": "Material",
+        "materials": {
+            "cordura": "Cordura 1000D",
+            "pvc": "PVC Rubber",
+            "embroidery": "Embroidery"
+        },
+        "sizeTitle": "Size",
+        "designTitle": "Design & Colors",
+        "backgroundColor": "Background Color",
+        "borderColor": "Border / Stitch Color",
+        "uploadTitle": "Upload Image",
+        "uploadPrompt": "Click to upload",
+        "uploadHint": "PNG, JPG (max 5MB)",
+        "uploadDone": "Custom Image",
+        "uploadStatus": "Uploaded",
+        "fileTooLarge": "File too large (max 5MB)",
+        "colors": {
+            "Ranger Green": "Ranger Green",
+            "Olive Drab": "Olive Drab",
+            "Coyote Brown": "Coyote Brown",
+            "Tan": "Tan",
+            "Black": "Black",
+            "Wolf Grey": "Wolf Grey",
+            "Navy Blue": "Navy Blue",
+            "Maroon": "Maroon"
+        }
+    },
+    "accordion": {
+        "shapeDimensions": "Shape & Dimensions",
+        "materialTexture": "Material & Texture",
+        "designColors": "Design & Colors"
+    },
+    "pricing": {
+        "summary": "Summary",
+        "quantity": "Quantity",
+        "unitPrice": "Unit Price",
+        "bulkDiscount": "Bulk Discount",
+        "total": "Total"
+    },
+    "submit": {
+        "button": "Submit Order",
+        "processing": "Processing..."
+    },
+    "language": {
+        "label": "Language",
+        "en": "English",
+        "ru": "Русский",
+        "he": "עברית"
+    }
+}

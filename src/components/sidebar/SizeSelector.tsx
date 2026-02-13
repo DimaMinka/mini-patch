@@ -4,7 +4,10 @@ import { SIZE_PRESETS } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 import type { PatchSize } from '@/lib/types/patch';
 
+import { useTranslations } from 'next-intl';
+
 export const SizeSelector = () => {
+    const t = useTranslations('sidebar');
     const dir = usePatchStore((state) => state.dir);
     const currentSize = usePatchStore((s) => s.size);
     const setSize = usePatchStore((s) => s.setSize);
@@ -14,7 +17,7 @@ export const SizeSelector = () => {
 
     return (
         <div className="space-y-3" dir={dir}>
-            <h3 className="text-sm font-medium text-muted-foreground text-start">Size</h3>
+            <h3 className="text-sm font-medium text-muted-foreground text-start">{t('sizeTitle')}</h3>
             <div className="grid grid-cols-2 gap-2">
                 {Object.entries(SIZE_PRESETS).map(([key, preset]) => (
                     <Button
@@ -28,7 +31,7 @@ export const SizeSelector = () => {
                         )}
                         onClick={() => setSize(preset)}
                     >
-                        <span className="text-sm font-semibold">{key}</span>
+                        <span className="text-sm font-semibold">{key === 'Circle' ? t('shapes.circle') : key}</span>
                         <span className="text-[10px] text-muted-foreground">{preset.label}</span>
                     </Button>
                 ))}

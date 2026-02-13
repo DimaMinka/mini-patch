@@ -3,7 +3,10 @@ import { Upload, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePatchStore } from '@/stores/usePatchStore';
 
+import { useTranslations } from 'next-intl';
+
 export const ImageUploader = () => {
+    const t = useTranslations('sidebar');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const userImageDataUrl = usePatchStore((s) => s.userImageDataUrl);
     const setUserImage = usePatchStore((s) => s.setUserImage);
@@ -13,7 +16,7 @@ export const ImageUploader = () => {
         if (!file) return;
 
         if (file.size > 5 * 1024 * 1024) {
-            alert("File too large (max 5MB)");
+            alert(t('fileTooLarge'));
             return;
         }
 
@@ -32,7 +35,7 @@ export const ImageUploader = () => {
 
     return (
         <div className="space-y-3">
-            <h3 className="text-sm font-medium text-muted-foreground">Upload Image</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">{t('uploadTitle')}</h3>
 
             {!userImageDataUrl ? (
                 <div
@@ -43,8 +46,8 @@ export const ImageUploader = () => {
                         <Upload className="w-5 h-5 text-secondary-foreground" />
                     </div>
                     <div className="text-center">
-                        <p className="text-sm font-medium">Click to upload</p>
-                        <p className="text-xs text-muted-foreground">PNG, JPG (max 5MB)</p>
+                        <p className="text-sm font-medium">{t('uploadPrompt')}</p>
+                        <p className="text-xs text-muted-foreground">{t('uploadHint')}</p>
                     </div>
                 </div>
             ) : (
@@ -55,8 +58,8 @@ export const ImageUploader = () => {
                         <img src={userImageDataUrl} alt="Preview" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">Custom Image</p>
-                        <p className="text-xs text-muted-foreground">Uploaded</p>
+                        <p className="text-sm font-medium truncate">{t('uploadDone')}</p>
+                        <p className="text-xs text-muted-foreground">{t('uploadStatus')}</p>
                     </div>
                     <Button
                         variant="ghost"

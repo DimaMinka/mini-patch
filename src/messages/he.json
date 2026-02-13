@@ -1,0 +1,63 @@
+{
+    "header": {
+        "title": "Antigravity Patch"
+    },
+    "sidebar": {
+        "title": "הגדרות",
+        "subtitle": "התאם אישית את הפאץ' הטקטי שלך",
+        "shapeTitle": "צורה",
+        "shapes": {
+            "shield": "מגן",
+            "circle": "עיגול",
+            "rectangle": "מלבן"
+        },
+        "materialTitle": "חומר",
+        "materials": {
+            "cordura": "קורדורה 1000D",
+            "pvc": "גומי PVC",
+            "embroidery": "רקמה"
+        },
+        "sizeTitle": "גודל",
+        "designTitle": "עיצוב וצבעים",
+        "backgroundColor": "צבע רקע",
+        "borderColor": "צבע מסגרת / תפר",
+        "uploadTitle": "העלאת תמונה",
+        "uploadPrompt": "לחץ להעלאה",
+        "uploadHint": "PNG, JPG (עד 5MB)",
+        "uploadDone": "תמונה מותאמת אישית",
+        "uploadStatus": "הועלה",
+        "fileTooLarge": "הקובץ גדול מדי (עד 5MB)",
+        "colors": {
+            "Ranger Green": "ירוק ריינג'ר",
+            "Olive Drab": "ירוק זית",
+            "Coyote Brown": "חום קויוט",
+            "Tan": "חום בהיר (Tan)",
+            "Black": "שחור",
+            "Wolf Grey": "אפור זאב",
+            "Navy Blue": "כחול צי",
+            "Maroon": "בורדו"
+        }
+    },
+    "accordion": {
+        "shapeDimensions": "צורה ומידות",
+        "materialTexture": "חומר ומרקם",
+        "designColors": "עיצוב וצבעים"
+    },
+    "pricing": {
+        "summary": "סיכום",
+        "quantity": "כמות",
+        "unitPrice": "מחיר ליחידה",
+        "bulkDiscount": "הנחת כמות",
+        "total": "סה״כ"
+    },
+    "submit": {
+        "button": "בצע הזמנה",
+        "processing": "מעבד..."
+    },
+    "language": {
+        "label": "שפה",
+        "en": "English",
+        "ru": "Русский",
+        "he": "עברית"
+    }
+}

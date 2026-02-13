@@ -4,10 +4,11 @@ import { Input } from '@/components/ui/input';
 import { usePatchStore } from '@/stores/usePatchStore';
 import { calculatePrice } from '@/lib/pricing/PriceCalculator';
 
-const formatCurrency = (val: number) =>
-    new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+import { useTranslations, useFormatter } from 'next-intl';
 
 export const PriceDisplay = () => {
+    const t = useTranslations('pricing');
+    const format = useFormatter();
     const dir = usePatchStore((state) => state.dir);
     // Select config needed for calculation individually to avoid infinite re-renders/loops
     const shape = usePatchStore((state) => state.shape);
@@ -26,7 +27,7 @@ export const PriceDisplay = () => {
     return (
         <div className="bg-card p-4 lg:p-6 shadow-up lg:shadow-none lg:border-s lg:border-t-0 lg:h-full flex flex-col space-y-4">
             <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-muted-foreground text-start">Quantity</span>
+                <span className="text-sm font-medium text-muted-foreground text-start">{t('quantity')}</span>
                 <div className="flex items-center gap-2">
                     <Button
                         variant="outline"
@@ -57,18 +58,18 @@ export const PriceDisplay = () => {
 
             <div className="space-y-2.5 pt-2">
                 <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground text-start">Unit Price</span>
-                    <span className="font-medium">{formatCurrency(breakdown.unitPrice)}</span>
+                    <span className="text-muted-foreground text-start">{t('unitPrice')}</span>
+                    <span className="font-medium">{format.number(breakdown.unitPrice, { style: 'currency', currency: 'USD' })}</span>
                 </div>
                 {breakdown.quantityDiscount > 0 && (
                     <div className="flex justify-between text-xs text-green-600 font-medium">
-                        <span className="text-start">Bulk Discount</span>
+                        <span className="text-start">{t('bulkDiscount')}</span>
                         <span>-{(breakdown.quantityDiscount * 100).toFixed(0)}%</span>
                     </div>
                 )}
                 <div className="flex justify-between items-end border-t pt-4 mt-2">
-                    <span className="font-semibold text-start">Total</span>
-                    <span className="text-2xl font-bold tracking-tight">{formatCurrency(breakdown.totalPrice)}</span>
+                    <span className="font-semibold text-start">{t('total')}</span>
+                    <span className="text-2xl font-bold tracking-tight">{format.number(breakdown.totalPrice, { style: 'currency', currency: 'USD' })}</span>
                 </div>
             </div>
         </div>

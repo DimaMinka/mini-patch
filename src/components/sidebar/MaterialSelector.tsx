@@ -4,17 +4,19 @@ import { cn } from '@/lib/utils';
 import { TEXTURE_MAP } from '@/lib/constants';
 import type { PatchMaterial } from '@/lib/types/patch';
 
+import { useTranslations } from 'next-intl';
+
 export const MaterialSelector = () => {
+    const t = useTranslations('sidebar');
     const dir = usePatchStore((state) => state.dir);
     const currentMaterial = usePatchStore((s) => s.material);
     const setMaterial = usePatchStore((s) => s.setMaterial);
 
     return (
         <div className="space-y-3" dir={dir}>
-            <h3 className="text-sm font-medium text-muted-foreground text-start">Material</h3>
+            <h3 className="text-sm font-medium text-muted-foreground text-start">{t('materialTitle')}</h3>
             <div className="flex flex-col gap-2">
                 {(Object.keys(TEXTURE_MAP) as PatchMaterial[]).map((material) => {
-                    const info = TEXTURE_MAP[material];
                     return (
                         <Button
                             key={material}
@@ -27,7 +29,7 @@ export const MaterialSelector = () => {
                             )}
                             onClick={() => setMaterial(material)}
                         >
-                            {info.label}
+                            {t(`materials.${material}`)}
                         </Button>
                     );
                 })}
