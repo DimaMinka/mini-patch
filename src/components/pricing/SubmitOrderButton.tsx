@@ -16,7 +16,7 @@ export const SubmitOrderButton = ({ onClick, isLoading, disabled }: SubmitOrderB
         >
             {isLoading ? (
                 <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="me-2 h-5 w-5 animate-spin" />
                     Processing...
                 </>
             ) : (

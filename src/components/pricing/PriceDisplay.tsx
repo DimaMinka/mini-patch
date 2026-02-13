@@ -23,7 +23,7 @@ export const PriceDisplay = () => {
     const breakdown = calculatePrice(config);
 
     return (
-        <div className="bg-card border-t p-4 lg:p-6 shadow-up lg:shadow-none lg:border-l lg:border-t-0 space-y-6">
+        <div className="bg-card border-t p-4 lg:p-6 shadow-up lg:shadow-none lg:border-s lg:border-t-0 space-y-6">
             <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Quantity</span>
                 <div className="flex items-center gap-3">

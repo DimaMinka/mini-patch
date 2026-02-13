@@ -45,7 +45,7 @@ export const ColorPicker = ({ label, value, onChange, allowCustom = false }: Col
                 ))}
             </div>
             {allowCustom && (
-                <div className="flex w-full max-w-sm items-center space-x-2">
+                <div className="flex w-full max-w-sm items-center space-x-2 rtl:space-x-reverse">
                     <input
                         type="color"
                         value={value}

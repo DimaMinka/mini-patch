@@ -71,7 +71,7 @@ export default function Home() {
         <div className="flex flex-col lg:grid lg:grid-cols-[280px_1fr_300px] lg:h-[calc(100vh-3.5rem)]">
 
             {/* Sidebar (Desktop: Left Col, Mobile: Order 2) */}
-            <div className="order-2 lg:order-1 border-r bg-background">
+            <div className="order-2 lg:order-1 border-e bg-background">
                 <Sidebar />
             </div>
 
@@ -84,7 +84,7 @@ export default function Home() {
             </div>
 
             {/* Price Panel (Desktop: Right Col, Mobile: Order 3 Sticky?) */}
-            <div className="order-3 lg:order-3 border-l bg-background flex flex-col">
+            <div className="order-3 lg:order-3 border-s bg-background flex flex-col">
                 <div className="flex-1 p-6 lg:overflow-auto">
                     <div className="space-y-6">
                         <h2 className="font-semibold text-lg tracking-tight hidden lg:block">Summary</h2>

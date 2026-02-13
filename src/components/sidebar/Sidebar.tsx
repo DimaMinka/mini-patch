@@ -19,7 +19,7 @@ export const Sidebar = () => {
     const setBorderColor = usePatchStore((state) => state.setBorderColor);
 
     return (
-        <aside className="w-full lg:w-[280px] flex-shrink-0 bg-background border-r flex flex-col h-full">
+        <aside className="w-full lg:w-[280px] flex-shrink-0 bg-background border-e flex flex-col h-full">
             <div className="p-4 border-b">
                 <h2 className="font-semibold text-lg tracking-tight">Configuration</h2>
                 <p className="text-sm text-muted-foreground">Customize your tactical patch</p>
