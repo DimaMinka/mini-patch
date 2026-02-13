@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
+import { usePatchStore } from '@/stores/usePatchStore';
 
 const TACTICAL_COLORS = [
     { label: 'Ranger Green', value: '#354E35' },
@@ -21,9 +22,11 @@ interface ColorPickerProps {
 }
 
 export const ColorPicker = ({ label, value, onChange, allowCustom = false }: ColorPickerProps) => {
+    const dir = usePatchStore((state) => state.dir);
+
     return (
-        <div className="space-y-3">
-            <h3 className="text-sm font-medium text-muted-foreground">{label}</h3>
+        <div className="space-y-3" dir={dir}>
+            <h3 className="text-sm font-medium text-muted-foreground text-start">{label}</h3>
             <div className="flex flex-wrap gap-2">
                 {TACTICAL_COLORS.map((color) => (
                     <Button

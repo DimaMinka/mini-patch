@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import { ThemeToggle } from './ThemeToggle';
 import { RtlToggle } from './RtlToggle';
@@ -11,7 +13,7 @@ export const AppHeader = () => {
                     <span className="hidden font-bold sm:inline-block">Antigravity Patch</span>
                 </Link>
                 <div className="flex flex-1 items-center justify-end space-x-2 rtl:space-x-reverse">
-                    <nav className="flex items-center space-x-1">
+                    <nav className="flex items-center space-x-1 rtl:space-x-reverse">
                         <RtlToggle />
                         <ThemeToggle />
                     </nav>

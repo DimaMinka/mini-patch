@@ -8,6 +8,7 @@ const formatCurrency = (val: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
 
 export const PriceDisplay = () => {
+    const dir = usePatchStore((state) => state.dir);
     // Select config needed for calculation individually to avoid infinite re-renders/loops
     const shape = usePatchStore((state) => state.shape);
     const material = usePatchStore((state) => state.material);
@@ -23,7 +24,7 @@ export const PriceDisplay = () => {
     const breakdown = calculatePrice(config);
 
     return (
-        <div className="bg-card border-t p-4 lg:p-6 shadow-up lg:shadow-none lg:border-s lg:border-t-0 space-y-6">
+        <div className="bg-card p-4 lg:p-6 shadow-up lg:shadow-none lg:border-s lg:border-t-0 space-y-3">
             <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground">Quantity</span>
                 <div className="flex items-center gap-3">

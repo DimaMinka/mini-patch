@@ -17,17 +17,13 @@ export default function Home() {
     // Called when user clicks "Submit Order"
     const handleSubmitClick = () => {
         setIsSubmitting(true);
-        // Trigger canvas to export base64 image
-        // The canvas component will respond by calling onExport
         setTriggerExport(Date.now());
     };
 
     // Called by PatchCanvas after generating image
     const handleCanvasExport = async (previewBase64: string) => {
         try {
-            // 1. Get current state snapshot
             const state = usePatchStore.getState();
-
             const config = {
                 shape: state.shape,
                 material: state.material,
@@ -38,10 +34,7 @@ export default function Home() {
                 userImageDataUrl: state.userImageDataUrl,
             };
 
-            // 2. Calculate final price
             const price = calculatePrice(config);
-
-            // 3. Build payload
             const payload: PatchOrderPayload = {
                 config,
                 price,
@@ -50,14 +43,9 @@ export default function Home() {
             };
 
             console.log('🚀 Order Submitted:', payload);
-            console.log('Base64 Preview Length:', previewBase64.length);
 
-            // 4. Simulate API call / Redirect
-            // await submitOrder(payload);
-
-            // MVP: Alert user (since we don't have real endpoint yet)
             setTimeout(() => {
-                alert(`Order for ${config.quantity} patches submitted!\nTotal: $${price.totalPrice}\n(See console for payload)`);
+                alert(`Order for ${config.quantity} patches submitted!\nTotal: $${price.totalPrice}`);
                 setIsSubmitting(false);
             }, 800);
 
@@ -68,30 +56,30 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col lg:grid lg:grid-cols-[280px_1fr_300px] lg:h-[calc(100vh-3.5rem)]">
+        <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_300px] w-full lg:h-[calc(100vh-3.5rem)] lg:overflow-hidden">
 
-            {/* Sidebar (Desktop: Left Col, Mobile: Order 2) */}
-            <div className="order-2 lg:order-1 border-e bg-background">
+            {/* 1. Sidebar (Desktop: Left, Mobile: Second) */}
+            <div className="order-2 lg:order-none border-e bg-background flex flex-col h-full min-h-0 relative z-20">
                 <Sidebar />
             </div>
 
-            {/* Main Canvas Area (Desktop: Center, Mobile: Order 1) */}
-            <div className="order-1 lg:order-2 flex flex-col items-center justify-center bg-muted/30 relative overflow-hidden p-4 min-h-[400px] lg:min-h-0">
+            {/* 2. Main Canvas Area (Desktop: Center, Mobile: First) */}
+            <div className="order-1 lg:order-none flex flex-col items-center justify-center bg-muted/30 relative p-4 min-h-[400px] lg:min-h-0 overflow-hidden">
                 <PatchCanvas
                     triggerExport={triggerExport}
                     onExport={handleCanvasExport}
                 />
             </div>
 
-            {/* Price Panel (Desktop: Right Col, Mobile: Order 3 Sticky?) */}
-            <div className="order-3 lg:order-3 border-s bg-background flex flex-col">
-                <div className="flex-1 p-6 lg:overflow-auto">
+            {/* 3. Price Panel (Desktop: Right, Mobile: Bottom) */}
+            <div className="order-3 lg:order-none border-s bg-background flex flex-col h-full min-h-0 relative z-20">
+                <div className="flex-1 p-6 overflow-auto">
                     <div className="space-y-6">
-                        <h2 className="font-semibold text-lg tracking-tight hidden lg:block">Summary</h2>
+                        <h2 className="font-semibold text-lg tracking-tight hidden lg:block text-start">Summary</h2>
                         <PriceDisplay />
                     </div>
                 </div>
-                <div className="p-4 border-t bg-background sticky bottom-0 z-10">
+                <div className="p-4 border-t bg-background sticky bottom-0 z-10 shrink-0">
                     <SubmitOrderButton
                         onClick={handleSubmitClick}
                         isLoading={isSubmitting}

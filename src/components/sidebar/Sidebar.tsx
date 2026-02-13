@@ -13,16 +13,17 @@ import { ColorPicker } from "./ColorPicker";
 import { usePatchStore } from "@/stores/usePatchStore";
 
 export const Sidebar = () => {
+    const dir = usePatchStore((state) => state.dir);
     const backgroundColor = usePatchStore((state) => state.backgroundColor);
     const borderColor = usePatchStore((state) => state.borderColor);
     const setBackgroundColor = usePatchStore((state) => state.setBackgroundColor);
     const setBorderColor = usePatchStore((state) => state.setBorderColor);
 
     return (
-        <aside className="w-full lg:w-[280px] flex-shrink-0 bg-background border-e flex flex-col h-full">
+        <aside className="w-full h-full flex flex-col bg-background">
             <div className="p-4 border-b">
-                <h2 className="font-semibold text-lg tracking-tight">Configuration</h2>
-                <p className="text-sm text-muted-foreground">Customize your tactical patch</p>
+                <h2 className="font-semibold text-lg tracking-tight text-start">Configuration</h2>
+                <p className="text-sm text-muted-foreground text-start">Customize your tactical patch</p>
             </div>
 
             <ScrollArea className="flex-1">
