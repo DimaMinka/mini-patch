@@ -55,3 +55,4 @@ export const RAG_CACHE_TTL_MS = 5 * 60 * 1000; // 5 min
 
 // ── Theme ───────────────────────────────────────────
 export const DEFAULT_THEME: 'light' | 'dark' = 'light';
+export const EXTERNAL_PAYMENT_URL = '/checkout';
