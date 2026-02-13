@@ -59,7 +59,7 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_300px] w-full lg:h-[calc(100vh-3.5rem)] lg:overflow-hidden">
 
             {/* 1. Sidebar (Desktop: Left, Mobile: Second) */}
-            <div className="order-2 lg:order-none border-e bg-background flex flex-col h-full min-h-0 relative z-20">
+            <div className="order-2 lg:order-none border-e bg-background flex flex-col h-full min-h-0 relative z-20 overflow-hidden">
                 <Sidebar />
             </div>
 
