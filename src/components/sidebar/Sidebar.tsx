@@ -20,13 +20,13 @@ export const Sidebar = () => {
     const setBorderColor = usePatchStore((state) => state.setBorderColor);
 
     return (
-        <aside className="w-full h-full flex flex-col min-h-0 bg-background overflow-hidden" dir={dir}>
+        <aside className="w-full lg:h-full flex flex-col lg:min-h-0 bg-background lg:overflow-hidden" dir={dir}>
             <div className="p-4 border-b">
                 <h2 className="font-semibold text-lg tracking-tight text-start">Configuration</h2>
                 <p className="text-sm text-muted-foreground text-start">Customize your tactical patch</p>
             </div>
 
-            <ScrollArea className="flex-1 min-h-0 w-full" dir={dir}>
+            <ScrollArea className="lg:flex-1 lg:min-h-0 w-full" dir={dir}>
                 <div className="p-4">
                     <Accordion type="multiple" defaultValue={['shape', 'material', 'size', 'design']} className="w-full space-y-4">
 

@@ -24,7 +24,7 @@ export const PriceDisplay = () => {
     const breakdown = calculatePrice(config);
 
     return (
-        <div className="bg-card p-4 lg:p-6 shadow-up lg:shadow-none lg:border-s lg:border-t-0 h-full flex flex-col space-y-4">
+        <div className="bg-card p-4 lg:p-6 shadow-up lg:shadow-none lg:border-s lg:border-t-0 lg:h-full flex flex-col space-y-4">
             <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-muted-foreground text-start">Quantity</span>
                 <div className="flex items-center gap-2">

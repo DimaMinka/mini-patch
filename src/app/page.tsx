@@ -59,12 +59,12 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr_300px] w-full lg:h-[calc(100vh-3.5rem)] lg:overflow-hidden">
 
             {/* 1. Sidebar (Desktop: Left, Mobile: Second) */}
-            <div className="order-2 lg:order-none border-e bg-background flex flex-col h-full min-h-0 relative z-20 overflow-hidden">
+            <div className="order-2 lg:order-none border-e bg-background flex flex-col lg:h-full lg:overflow-hidden relative z-20">
                 <Sidebar />
             </div>
 
             {/* 2. Main Canvas Area (Desktop: Center, Mobile: First) */}
-            <div className="order-1 lg:order-none flex flex-col items-center justify-center bg-muted/30 relative p-4 min-h-[400px] lg:min-h-0 overflow-hidden">
+            <div className="order-1 lg:order-none flex flex-col items-center justify-center bg-muted/30 relative p-4 min-h-[400px] lg:min-h-0">
                 <PatchCanvas
                     triggerExport={triggerExport}
                     onExport={handleCanvasExport}
@@ -72,8 +72,8 @@ export default function Home() {
             </div>
 
             {/* 3. Price Panel (Desktop: Right, Mobile: Bottom) */}
-            <div className="order-3 lg:order-none border-s bg-background flex flex-col h-full min-h-0 relative z-20">
-                <div className="flex-1 p-6 overflow-auto">
+            <div className="order-3 lg:order-none border-s bg-background flex flex-col lg:h-full lg:min-h-0 relative z-20">
+                <div className="flex-1 p-6 lg:overflow-auto">
                     <div className="space-y-6">
                         <h2 className="font-semibold text-lg tracking-tight hidden lg:block text-start">Summary</h2>
                         <PriceDisplay />
