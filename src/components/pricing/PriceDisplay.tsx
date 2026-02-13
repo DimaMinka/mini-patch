@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { usePatchStore } from '@/stores/usePatchStore';
 import { calculatePrice } from '@/lib/pricing/PriceCalculator';
+import { MAX_QUANTITY } from '@/lib/constants';
 
 import { useTranslations, useFormatter } from 'next-intl';
 
@@ -41,6 +42,7 @@ export const PriceDisplay = () => {
                     <Input
                         type="number"
                         min={1}
+                        max={MAX_QUANTITY}
                         value={config.quantity}
                         onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                         className="w-14 h-7 text-center px-1"
@@ -50,6 +52,7 @@ export const PriceDisplay = () => {
                         size="icon"
                         className="h-7 w-7 shrink-0"
                         onClick={() => setQuantity(config.quantity + 1)}
+                        disabled={config.quantity >= MAX_QUANTITY}
                     >
                         <Plus className="w-3 h-3" />
                     </Button>

@@ -8,6 +8,7 @@ import {
     DEFAULT_BACKGROUND_COLOR,
     DEFAULT_BORDER_COLOR,
     DEFAULT_QUANTITY,
+    MAX_QUANTITY,
 } from '@/lib/constants';
 
 interface PatchStore extends PatchConfig {
@@ -49,7 +50,7 @@ export const usePatchStore = create<PatchStore>()(
             setSize: (size) => set({ size }),
             setBackgroundColor: (color) => set({ backgroundColor: color }),
             setBorderColor: (color) => set({ borderColor: color }),
-            setQuantity: (qty) => set({ quantity: Math.max(1, qty) }),
+            setQuantity: (qty) => set({ quantity: Math.min(MAX_QUANTITY, Math.max(1, qty)) }),
             setUserImage: (dataUrl) => set({ userImageDataUrl: dataUrl }),
             setLocale: (locale) => set({ locale, dir: locale === 'he' ? 'rtl' : 'ltr' }),
             reset: () => set({ ...DEFAULT_CONFIG, dir: 'ltr', locale: 'en' }),

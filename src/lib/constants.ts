@@ -42,6 +42,7 @@ export const TEXTURE_MAP: Record<PatchMaterial, { src: string; opacity: number; 
 export const DEFAULT_BACKGROUND_COLOR = '#2D5A27';
 export const DEFAULT_BORDER_COLOR = '#1A1A1A';
 export const DEFAULT_QUANTITY = 10;
+export const MAX_QUANTITY = 500;
 export const DEFAULT_SHAPE = 'shield' as const;
 export const DEFAULT_MATERIAL = 'cordura' as const;
 export const DEFAULT_SIZE = SIZE_PRESETS.M;
