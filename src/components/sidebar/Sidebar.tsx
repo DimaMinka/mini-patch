@@ -19,7 +19,7 @@ export const Sidebar = () => {
     const setBorderColor = usePatchStore((state) => state.setBorderColor);
 
     return (
-        <aside className="w-full lg:w-[280px] flex-shrink-0 bg-background border-r flex flex-col h-full overflow-hidden">
+        <aside className="w-full lg:w-[280px] flex-shrink-0 bg-background border-r flex flex-col h-full">
             <div className="p-4 border-b">
                 <h2 className="font-semibold text-lg tracking-tight">Configuration</h2>
                 <p className="text-sm text-muted-foreground">Customize your tactical patch</p>
@@ -31,7 +31,7 @@ export const Sidebar = () => {
 
                         <AccordionItem value="shape" className="border-0">
                             <AccordionTrigger className="hover:no-underline py-2 text-md font-semibold">Shape & Dimensions</AccordionTrigger>
-                            <AccordionContent className="pt-2 pb-4 space-y-6">
+                            <AccordionContent className="pt-2 pb-4 space-y-6 px-1">
                                 <ShapeSelector />
                                 <SizeSelector />
                             </AccordionContent>
@@ -39,14 +39,14 @@ export const Sidebar = () => {
 
                         <AccordionItem value="material" className="border-0">
                             <AccordionTrigger className="hover:no-underline py-2 text-md font-semibold">Material & Texture</AccordionTrigger>
-                            <AccordionContent className="pt-2 pb-4">
+                            <AccordionContent className="pt-2 pb-4 px-1">
                                 <MaterialSelector />
                             </AccordionContent>
                         </AccordionItem>
 
                         <AccordionItem value="design" className="border-0">
                             <AccordionTrigger className="hover:no-underline py-2 text-md font-semibold">Design & Colors</AccordionTrigger>
-                            <AccordionContent className="pt-2 pb-4 space-y-6">
+                            <AccordionContent className="pt-2 pb-4 space-y-6 px-1">
                                 <ColorPicker
                                     label="Background Color"
                                     value={backgroundColor}

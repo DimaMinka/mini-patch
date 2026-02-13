@@ -21,7 +21,7 @@ export const SizeSelector = () => {
                         variant={'outline'}
                         className={cn(
                             "h-14 flex flex-col items-center justify-center gap-0.5",
-                            isSelected(preset) && "ring-2 ring-primary bg-accent/20"
+                            isSelected(preset) && "border-2 border-primary bg-primary/5"
                         )}
                         onClick={() => setSize(preset)}
                     >

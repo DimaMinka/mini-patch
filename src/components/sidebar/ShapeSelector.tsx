@@ -24,7 +24,7 @@ export const ShapeSelector = () => {
                         variant={currentShape === value ? 'default' : 'outline'}
                         className={cn(
                             "h-20 flex flex-col items-center justify-center gap-2",
-                            currentShape === value && "ring-2 ring-primary ring-offset-1"
+                            currentShape === value && "ring-2 ring-primary bg-primary/5 border-primary"
                         )}
                         onClick={() => setShape(value)}
                     >

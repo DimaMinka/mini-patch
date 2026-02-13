@@ -30,8 +30,8 @@ export const ColorPicker = ({ label, value, onChange, allowCustom = false }: Col
                         key={color.value}
                         variant="outline"
                         className={cn(
-                            "w-8 h-8 rounded-full p-0 border-2 relative overflow-hidden transition-all",
-                            value === color.value ? "border-primary ring-2 ring-primary ring-offset-1" : "border-transparent ring-1 ring-border"
+                            "w-8 h-8 rounded-full p-0 relative transition-all",
+                            value === color.value ? "border-2 border-white ring-2 ring-primary" : "border ring-1 ring-border"
                         )}
                         style={{ backgroundColor: color.value }}
                         onClick={() => onChange(color.value)}
