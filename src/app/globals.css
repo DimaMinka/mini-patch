@@ -138,3 +138,29 @@
   width: 100% !important;
   height: 100% !important;
 }
+
+/* Custom Scrollbar Styles */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/20 rounded-full transition-colors;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+
+  /* Support for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) transparent;
+  }
+}
