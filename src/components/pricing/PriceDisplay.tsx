@@ -8,18 +8,18 @@ const formatCurrency = (val: number) =>
     new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
 
 export const PriceDisplay = () => {
-    // Select config needed for calculation
-    const config = usePatchStore((state) => ({
-        shape: state.shape,
-        material: state.material,
-        size: state.size,
-        backgroundColor: state.backgroundColor,
-        borderColor: state.borderColor,
-        quantity: state.quantity,
-        userImageDataUrl: state.userImageDataUrl,
-    }));
+    // Select config needed for calculation individually to avoid infinite re-renders/loops
+    const shape = usePatchStore((state) => state.shape);
+    const material = usePatchStore((state) => state.material);
+    const size = usePatchStore((state) => state.size);
+    const backgroundColor = usePatchStore((state) => state.backgroundColor);
+    const borderColor = usePatchStore((state) => state.borderColor);
+    const quantity = usePatchStore((state) => state.quantity);
+    const userImageDataUrl = usePatchStore((state) => state.userImageDataUrl);
+
     const setQuantity = usePatchStore((state) => state.setQuantity);
 
+    const config = { shape, material, size, backgroundColor, borderColor, quantity, userImageDataUrl };
     const breakdown = calculatePrice(config);
 
     return (
