@@ -1,10 +1,10 @@
-import { Shield, Circle, Square } from 'lucide-react';
+import { Shield, Circle, Square, LucideIcon } from 'lucide-react';
 import { usePatchStore } from '@/stores/usePatchStore';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import type { PatchShape } from '@/lib/types/patch';
 
-const SHAPES: { value: PatchShape; label: string; Icon: any }[] = [
+const SHAPES: { value: PatchShape; label: string; Icon: LucideIcon }[] = [
     { value: 'shield', label: 'Shield', Icon: Shield },
     { value: 'circle', label: 'Circle', Icon: Circle },
     { value: 'rectangle', label: 'Rectangle', Icon: Square },

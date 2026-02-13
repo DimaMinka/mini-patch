@@ -1,8 +1,7 @@
 import { useRef, ChangeEvent } from 'react';
-import { Upload, Trash2, Image as ImageIcon } from 'lucide-react';
+import { Upload, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePatchStore } from '@/stores/usePatchStore';
-import { cn } from '@/lib/utils';
 
 export const ImageUploader = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -52,6 +51,7 @@ export const ImageUploader = () => {
                 <div className="flex items-center gap-3 p-3 border rounded-lg bg-card">
                     <div className="w-12 h-12 bg-muted rounded overflow-hidden flex-shrink-0 relative">
                         {/* Simple preview or icon */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={userImageDataUrl} alt="Preview" className="w-full h-full object-cover" />
                     </div>
                     <div className="flex-1 min-w-0">

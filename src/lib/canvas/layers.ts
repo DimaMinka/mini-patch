@@ -41,6 +41,7 @@ export async function updateCanvas(canvas: Canvas, config: PatchConfig) {
 
     // 2. Preserve existing user image state (if any)
     // We identify it by a custom property or type
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const existingUserImage = canvas.getObjects().find(o => (o as any).id === 'user-image') as FabricImage | undefined;
 
     let userImageState = null;
@@ -120,6 +121,7 @@ export async function updateCanvas(canvas: Canvas, config: PatchConfig) {
             borderColor: '#000',
             cornerStyle: 'circle',
             transparentCorners: false,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
 
         canvas.add(imgObj);
