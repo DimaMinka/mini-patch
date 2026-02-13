@@ -23,10 +23,10 @@ export const ShapeSelector = () => {
                         key={value}
                         variant="outline"
                         className={cn(
-                            "h-20 flex flex-col items-center justify-center gap-2 transition-all",
+                            "h-20 flex flex-col items-center justify-center gap-2 transition-all duration-200",
                             currentShape === value
-                                ? "border-2 border-primary bg-primary/5 text-primary shadow-sm"
-                                : "text-muted-foreground hover:text-foreground"
+                                ? "border-2 border-primary bg-primary/10 dark:bg-primary/20 text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)] dark:shadow-[0_0_20px_rgba(var(--primary),0.2)]"
+                                : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
                         )}
                         onClick={() => setShape(value)}
                     >

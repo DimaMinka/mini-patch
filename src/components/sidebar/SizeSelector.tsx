@@ -20,10 +20,10 @@ export const SizeSelector = () => {
                         key={key}
                         variant="outline"
                         className={cn(
-                            "h-14 flex flex-col items-center justify-center gap-0.5 transition-all text-foreground",
+                            "h-14 flex flex-col items-center justify-center gap-0.5 transition-all duration-200",
                             isSelected(preset)
-                                ? "border-2 border-primary bg-primary/5 text-primary shadow-sm"
-                                : "text-muted-foreground hover:text-foreground"
+                                ? "border-2 border-primary bg-primary/10 dark:bg-primary/20 text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)] dark:shadow-[0_0_20px_rgba(var(--primary),0.2)]"
+                                : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
                         )}
                         onClick={() => setSize(preset)}
                     >
