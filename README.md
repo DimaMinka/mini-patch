@@ -8,26 +8,26 @@ An AI-first landing page for designing custom tactical patches. Chat with the Li
 
 ## Features
 
-- **AI Chat Interface** — Describe your patch idea in natural language (mock AI for now)
-- **Full Configurator** — Shape, material, size, color picker, image upload, and live canvas preview
-- **Multi-language** — English, Russian, Hebrew (RTL supported)
-- **Theme Toggle** — Light / Dark mode
-- **Responsive** — Desktop and mobile layouts with a collapsible hamburger menu
-- **CI/CD** — Auto-deploy to GitHub Pages via GitHub Actions
+- **Gemini-Powered Semantic Search** — Search for patches using natural language (e.g., "Gaza unit patches" or "Medical team"). Uses vector embeddings for high-precision discovery.
+- **Smart Input Filter** — Localized (EN, RU, HE) chat filtering to catch casual conversation and profanity instantly, saving backend tokens.
+- **Product Discovery** — Paginated browsing of patch collections with instant "Load More" functionality.
+- **Seamless Constructor Integration** — Found a patch you like? Click "Order Now" to auto-load the design and shape directly into the configurator.
+- **Full Configurator** — Real-time customization of Shape, Material, Size, Colors, and Custom Images with a Fabric.js canvas preview.
+- **Premium Aesthetics** — Vibrant glassmorphism design, pulse/shine animations, and dark/light mode support.
+- **Localization** — Full support for English, Russian, and Hebrew (RTL).
 
 ## Tech Stack
 
-| Layer        | Technology                          |
-|-------------|-------------------------------------|
-| Framework   | Next.js 16 (App Router)             |
-| Language    | TypeScript                          |
-| Styling     | Tailwind CSS v4                     |
-| UI          | shadcn/ui (Radix UI primitives)     |
-| State       | Zustand (persisted)                 |
-| Canvas      | Fabric.js                           |
-| i18n        | next-intl                           |
-| Theming     | next-themes                         |
-| Deployment  | GitHub Pages (static export)        |
+| Layer        | Technology                                      |
+|-------------|-------------------------------------------------|
+| **Frontend** | Next.js 15 (App Router), TypeScript            |
+| **Styling**  | Tailwind CSS v4, Lucide Icons                   |
+| **AI / NLP** | Google Gemini (Embeddings), Vercel AI SDK      |
+| **Database** | Supabase (PostgreSQL + pgvector)                |
+| **State**    | Zustand (with persistence)                      |
+| **Graphics** | Fabric.js (Canvas)                              |
+| **i18n**     | next-intl (EN, RU, HE)                          |
+| **Deployment**| GitHub Pages (static export)                    |
 
 ## Getting Started
 
@@ -79,6 +79,7 @@ src/
 │   ├── providers/          # ThemeProvider, LocaleProvider
 │   └── ui/                 # shadcn/ui primitives (Button, Input, etc.)
 ├── lib/
+│   ├── chat/               # Smart input filtering & token optimization
 │   ├── constants.ts        # Pricing, sizes, textures, defaults
 │   ├── pricing/            # PriceCalculator
 │   └── types/              # TypeScript interfaces
