@@ -4,16 +4,16 @@ on:
   push:
     branches: ["main"]
 
-  # Allocates permissions for the GITHUB_TOKEN to deploy to GitHub Pages
-  permissions:
-    contents: read
-    pages: write
-    id-token: write
+# Allocates permissions for the GITHUB_TOKEN to deploy to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
-  # Allow only one concurrent deployment
-  concurrency:
-    group: "pages"
-    cancel-in-progress: false
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   # Build job
