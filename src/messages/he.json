@@ -1,6 +1,12 @@
 {
     "header": {
-        "title": "Antigravity Patch"
+        "title": "LIZARD",
+        "nav": {
+            "products": "מוצרים",
+            "gallery": "גלריה",
+            "about": "אודות",
+            "contact": "צור קשר"
+        }
     },
     "sidebar": {
         "title": "הגדרות",
@@ -59,5 +65,21 @@
         "en": "English",
         "ru": "Русский",
         "he": "עברית"
+    },
+    "chat": {
+        "placeholder": "תאר את טלאי הטקטי האידיאלי שלך...",
+        "submit": "צור",
+        "intro": "שלום, מפעיל. אני יכול לעזור לך לעצב את הטלאי המותאם אישית שלך. מה אתה צריך?",
+        "openConfigurator": "או הגדר ידנית",
+        "actions": {
+            "products": "הראו לי את המוצרים שלכם",
+            "gallery": "הראו לי את הגלריה",
+            "about": "ספרו לי על Lizard",
+            "contact": "איך ניתן ליצור קשר?"
+        }
+    },
+    "modal": {
+        "title": "הגדרת פאץ'",
+        "close": "סגור"
     }
 }

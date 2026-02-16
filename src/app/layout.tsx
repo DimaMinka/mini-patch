@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Antigravity Patch Builder",
-  description: "Custom Tactical Patch Configurator MVP",
+  title: "Lizard - Custom Patch Design",
+  description: "AI-powered custom tactical patch builder by Lizard Studio",
 };
 
 export default function RootLayout({

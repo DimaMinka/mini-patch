@@ -25,6 +25,11 @@ interface PatchStore extends PatchConfig {
     setQuantity: (qty: number) => void;
     setUserImage: (dataUrl: string | null) => void;
     setLocale: (locale: 'en' | 'ru' | 'he') => void;
+
+    // External triggers (e.g. from Menu)
+    chatAction: string | null;
+    setChatAction: (action: string | null) => void;
+
     reset: () => void;
 }
 
@@ -53,10 +58,18 @@ export const usePatchStore = create<PatchStore>()(
             setQuantity: (qty) => set({ quantity: Math.min(MAX_QUANTITY, Math.max(1, qty)) }),
             setUserImage: (dataUrl) => set({ userImageDataUrl: dataUrl }),
             setLocale: (locale) => set({ locale, dir: locale === 'he' ? 'rtl' : 'ltr' }),
+
+            chatAction: null,
+            setChatAction: (action) => set({ chatAction: action }),
+
             reset: () => set({ ...DEFAULT_CONFIG, dir: 'ltr', locale: 'en' }),
         }),
         {
             name: 'patch-builder-storage',
+            partialize: (state) => {
+                const { chatAction, setChatAction, ...rest } = state;
+                return rest;
+            }
         }
     )
 );

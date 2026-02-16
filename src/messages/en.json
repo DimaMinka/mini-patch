@@ -1,6 +1,12 @@
 {
     "header": {
-        "title": "Antigravity Patch"
+        "title": "LIZARD",
+        "nav": {
+            "products": "Products",
+            "gallery": "Gallery",
+            "about": "About",
+            "contact": "Contact"
+        }
     },
     "sidebar": {
         "title": "Configuration",
@@ -59,5 +65,20 @@
         "en": "English",
         "ru": "Русский",
         "he": "עברית"
+    },
+    "chat": {
+        "placeholder": "Describe your ideal tactical patch...",
+        "intro": "Greetings, Operator. I can help you design a custom tactical patch. Tell me what you need.",
+        "openConfigurator": "Or configure manually",
+        "actions": {
+            "products": "Show me your products",
+            "gallery": "Show me the gallery",
+            "about": "Tell me about Lizard",
+            "contact": "How can I contact you?"
+        }
+    },
+    "modal": {
+        "title": "Patch Configurator",
+        "close": "Close"
     }
 }
