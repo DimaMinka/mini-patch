@@ -3,15 +3,23 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, Sparkles, User, ArrowDown } from 'lucide-react';
+import { Send, Sparkles, User, ArrowDown, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePatchStore } from '@/stores/usePatchStore';
+
+interface PatchResult {
+    id: string;
+    image_url: string;
+    description: string;
+    metadata: any;
+    similarity: number;
+}
 
 interface Message {
     id: string;
     role: 'user' | 'ai';
     content: string;
-    showPatch?: boolean;
+    patches?: PatchResult[];
 }
 
 interface HeroChatProps {
@@ -53,32 +61,75 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                 ? t(`actions.${chatAction}`)
                 : chatAction;
 
-            handleSend(message);
+            if (chatAction === 'products') {
+                handleSend(message, { type: 'latest', limit: 9 });
+            } else {
+                handleSend(message);
+            }
             setChatAction(null);
         }
     }, [chatAction, setChatAction, t]);
 
-    const handleSend = (contentOverride?: string) => {
+    const handleSend = async (contentOverride?: string, options: { type?: 'latest', limit?: number } = {}) => {
         const content = contentOverride || inputValue;
         if (!content.trim()) return;
 
+        // 1. Add User Message
         const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content };
         setMessages(prev => [...prev, userMsg]);
         if (!contentOverride) setInputValue('');
         setIsTyping(true);
 
-        // Mock AI response
-        setTimeout(() => {
-            setIsTyping(false);
+        try {
+            // 2. Call Search API
+            const res = await fetch('/mini-patch/api/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: content,
+                    type: options.type,
+                    limit: options.limit
+                }),
+            });
+
+            const data = await res.json();
+            const patches = data.results || [];
+
+            // 3. Add AI Response
+            let aiContent = '';
+            if (options.type === 'latest') {
+                aiContent = patches.length > 0
+                    ? t('foundLatest', { count: patches.length }) // We need to add this key
+                    : t('notFound', { query: content });
+            } else {
+                aiContent = patches.length > 0
+                    ? t('found', { count: patches.length, query: content })
+                    : t('notFound', { query: content });
+            }
+
             const aiMsg: Message = {
                 id: crypto.randomUUID(),
                 role: 'ai',
-                content: "Applying the Lizard style... Here's a concept based on your idea.",
-                showPatch: true
+                content: aiContent,
+                patches
             };
+
             setMessages(prev => [...prev, aiMsg]);
-        }, 1500);
+
+        } catch (error) {
+            console.error('Search failed:', error);
+            const errorMsg: Message = {
+                id: crypto.randomUUID(),
+                role: 'ai',
+                content: t('error')
+            };
+            setMessages(prev => [...prev, errorMsg]);
+        } finally {
+            setIsTyping(false);
+        }
     };
+
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     return (
         <section className="relative flex flex-col items-center justify-center h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-teal/20 via-background to-background overflow-hidden px-4">
@@ -101,12 +152,28 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                                 : 'bg-muted/50 border border-border rounded-tl-sm'
                                 }`}>
                                 <p>{msg.content}</p>
-                                {msg.showPatch && (
-                                    <div className="mt-3 relative w-32 h-32 bg-background/50 rounded-lg border border-dashed border-brand-teal/50 flex items-center justify-center group cursor-pointer hover:border-brand-teal transition-colors" onClick={onOpenConfigurator}>
-                                        <div className="text-brand-coral group-hover:scale-110 transition-transform">
-                                            <Sparkles size={24} />
-                                        </div>
-                                        <div className="absolute inset-0 bg-gradient-to-tr from-brand-teal/10 to-brand-gold/10 rounded-lg" />
+                                {msg.patches && msg.patches.length > 0 && (
+                                    <div className="mt-3 grid grid-cols-2 gap-2">
+                                        {msg.patches.map((patch) => (
+                                            <div
+                                                key={patch.id}
+                                                className="relative aspect-square bg-background/50 rounded-lg border border-border overflow-hidden group cursor-pointer hover:border-brand-teal transition-colors"
+                                                onClick={() => setSelectedImage(patch.image_url)}
+                                                title={patch.metadata?.unit_name || patch.description}
+                                            >
+                                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                <img
+                                                    src={patch.image_url}
+                                                    alt="Found Patch"
+                                                    className="w-full h-full object-contain p-2"
+                                                />
+                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+                                                    <span className="text-white text-[10px] font-medium truncate w-full">
+                                                        {patch.metadata?.unit || patch.metadata?.organization || 'Unknown'}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 )}
                             </div>
@@ -158,6 +225,30 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                     <ArrowDown className="w-4 h-4 group-hover:translate-y-1 transition-transform" />
                 </Button>
             </div>
+
+            {/* Image Popup Modal */}
+            {selectedImage && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+                    onClick={() => setSelectedImage(null)}
+                >
+                    <div className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center">
+                        <button
+                            onClick={() => setSelectedImage(null)}
+                            className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors z-10"
+                        >
+                            <X size={32} />
+                        </button>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                            src={selectedImage}
+                            alt="Full View"
+                            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200"
+                            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
+                        />
+                    </div>
+                </div>
+            )}
 
         </section>
     );

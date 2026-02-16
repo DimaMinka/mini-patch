@@ -84,7 +84,11 @@
             "gallery": "Show me the gallery",
             "about": "Tell me about Lizard",
             "contact": "How can I contact you?"
-        }
+        },
+        "found": "I found {count} patches matching \"{query}\":",
+        "foundLatest": "Here are the latest {count} patches from our collection:",
+        "notFound": "I couldn't find any patches matching \"{query}\". Try searching for a specific unit, color, or shape.",
+        "error": "Sorry, I encountered an error while searching. Please try again."
     },
     "modal": {
         "title": "Patch Configurator",
