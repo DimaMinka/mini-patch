@@ -8,7 +8,7 @@ An AI-first landing page for designing custom tactical patches. Chat with the Li
 
 ## Features
 
-- **Gemini-Powered Semantic Search** — Search for patches using natural language (e.g., "Gaza unit patches" or "Medical team"). Uses vector embeddings for high-precision discovery.
+- **Gemini-Powered Semantic Search** — Search for patches using natural language (e.g., "Tactical unit patches" or "Medical team"). Uses vector embeddings for high-precision discovery.
 - **Smart Input Filter** — Localized (EN, RU, HE) chat filtering to catch casual conversation and profanity instantly, saving backend tokens.
 - **Product Discovery** — Paginated browsing of patch collections with instant "Load More" functionality.
 - **Seamless Constructor Integration** — Found a patch you like? Click "Order Now" to auto-load the design and shape directly into the configurator.
