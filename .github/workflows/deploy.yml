@@ -32,6 +32,10 @@ jobs:
       - name: Create 404.html for SPA Routing
         run: cp out/index.html out/404.html
 
+      # Disable Jekyll: This prevents GitHub Pages from ignoring folders starting with an underscore (like _next).
+      - name: Create .nojekyll
+        run: touch out/.nojekyll
+
       - name: Deploy to gh-pages branch
         uses: JamesIves/github-pages-deploy-action@v4
         with:
