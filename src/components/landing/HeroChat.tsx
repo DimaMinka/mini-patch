@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Send, Sparkles, User, ArrowDown, X } from 'lucide-react';
+import { Send, Loader2, User, ArrowDown, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePatchStore } from '@/stores/usePatchStore';
 
@@ -20,6 +20,10 @@ interface Message {
     role: 'user' | 'ai';
     content: string;
     patches?: PatchResult[];
+    hasMore?: boolean;
+    isLoadingMore?: boolean;
+    searchType?: 'latest' | 'semantic';
+    originalQuery?: string;
 }
 
 interface HeroChatProps {
@@ -62,7 +66,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                 : chatAction;
 
             if (chatAction === 'products') {
-                handleSend(message, { type: 'latest', limit: 9 });
+                handleSend(message, { type: 'latest', limit: 1 });
             } else {
                 handleSend(message);
             }
@@ -80,6 +84,8 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
         if (!contentOverride) setInputValue('');
         setIsTyping(true);
 
+        const limit = options.limit || 1; // User wants limit 1
+
         try {
             // 2. Call Search API
             const res = await fetch('/mini-patch/api/search', {
@@ -88,7 +94,8 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                 body: JSON.stringify({
                     query: content,
                     type: options.type,
-                    limit: options.limit
+                    limit: limit,
+                    offset: 0
                 }),
             });
 
@@ -99,7 +106,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
             let aiContent = '';
             if (options.type === 'latest') {
                 aiContent = patches.length > 0
-                    ? t('foundLatest', { count: patches.length }) // We need to add this key
+                    ? t('foundLatest', { count: patches.length })
                     : t('notFound', { query: content });
             } else {
                 aiContent = patches.length > 0
@@ -111,7 +118,10 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                 id: crypto.randomUUID(),
                 role: 'ai',
                 content: aiContent,
-                patches
+                patches,
+                hasMore: data.hasMore,
+                searchType: options.type || 'semantic',
+                originalQuery: content
             };
 
             setMessages(prev => [...prev, aiMsg]);
@@ -126,6 +136,45 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
             setMessages(prev => [...prev, errorMsg]);
         } finally {
             setIsTyping(false);
+        }
+    };
+
+    const handleLoadMore = async (msgId: string) => {
+        const msg = messages.find(m => m.id === msgId);
+        if (!msg) return;
+
+        // Set Loading State for this specific message
+        setMessages(prev => prev.map(m => m.id === msgId ? { ...m, isLoadingMore: true } : m));
+
+        try {
+            const res = await fetch('/mini-patch/api/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: msg.originalQuery,
+                    type: msg.searchType,
+                    limit: 1,
+                    offset: msg.patches?.length || 0
+                }),
+            });
+
+            const data = await res.json();
+            const newPatches = data.results || [];
+
+            setMessages(prev => prev.map(m => {
+                if (m.id === msgId) {
+                    return {
+                        ...m,
+                        patches: [...(m.patches || []), ...newPatches],
+                        hasMore: data.hasMore,
+                        isLoadingMore: false
+                    };
+                }
+                return m;
+            }));
+        } catch (error) {
+            console.error('Load more failed:', error);
+            setMessages(prev => prev.map(m => m.id === msgId ? { ...m, isLoadingMore: false } : m));
         }
     };
 
@@ -153,27 +202,45 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                                 }`}>
                                 <p>{msg.content}</p>
                                 {msg.patches && msg.patches.length > 0 && (
-                                    <div className="mt-3 grid grid-cols-2 gap-2">
-                                        {msg.patches.map((patch) => (
-                                            <div
-                                                key={patch.id}
-                                                className="relative aspect-square bg-background/50 rounded-lg border border-border overflow-hidden group cursor-pointer hover:border-brand-teal transition-colors"
-                                                onClick={() => setSelectedImage(patch.image_url)}
-                                                title={patch.metadata?.unit_name || patch.description}
-                                            >
-                                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                                <img
-                                                    src={patch.image_url}
-                                                    alt="Found Patch"
-                                                    className="w-full h-full object-contain p-2"
-                                                />
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
-                                                    <span className="text-white text-[10px] font-medium truncate w-full">
-                                                        {patch.metadata?.unit || patch.metadata?.organization || 'Unknown'}
-                                                    </span>
+                                    <div className="mt-3 flex flex-col gap-3">
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {msg.patches.map((patch) => (
+                                                <div
+                                                    key={patch.id}
+                                                    className="relative aspect-square bg-background/50 rounded-lg border border-border overflow-hidden group cursor-pointer hover:border-brand-teal transition-colors"
+                                                    onClick={() => setSelectedImage(patch.image_url)}
+                                                    title={patch.metadata?.unit_name || patch.description}
+                                                >
+                                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                                    <img
+                                                        src={patch.image_url}
+                                                        alt="Found Patch"
+                                                        className="w-full h-full object-contain p-2"
+                                                    />
+                                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-2">
+                                                        <span className="text-white text-[10px] font-medium truncate w-full">
+                                                            {patch.metadata?.unit || patch.metadata?.organization || 'Unknown'}
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))}
+                                        </div>
+
+                                        {msg.hasMore && (
+                                            <Button
+                                                variant="outline"
+                                                size="sm"
+                                                onClick={() => handleLoadMore(msg.id)}
+                                                disabled={msg.isLoadingMore}
+                                                className="w-full h-8 text-xs border-brand-teal/30 hover:bg-brand-teal/10 hover:text-brand-teal transition-all flex items-center justify-center gap-2"
+                                            >
+                                                {msg.isLoadingMore ? (
+                                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                                ) : (
+                                                    t('loadMore')
+                                                )}
+                                            </Button>
+                                        )}
                                     </div>
                                 )}
                             </div>
