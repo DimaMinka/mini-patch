@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Send, Loader2, User, ArrowDown, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { usePatchStore } from '@/stores/usePatchStore';
+import { filterInput } from '@/lib/chat/inputFilter';
 
 interface PatchResult {
     id: string;
@@ -47,6 +48,8 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
 
     const chatAction = usePatchStore((state) => state.chatAction);
     const setChatAction = usePatchStore((state) => state.setChatAction);
+    const setUserImage = usePatchStore((state) => state.setUserImage);
+    const setShape = usePatchStore((state) => state.setShape);
 
     // Initial greeting
     useEffect(() => {
@@ -66,7 +69,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                 : chatAction;
 
             if (chatAction === 'products') {
-                handleSend(message, { type: 'latest', limit: 1 });
+                handleSend(message, { type: 'latest', limit: 2 });
             } else {
                 handleSend(message);
             }
@@ -84,7 +87,23 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
         if (!contentOverride) setInputValue('');
         setIsTyping(true);
 
-        const limit = options.limit || 1; // User wants limit 1
+        // --- FILTER CHECK ---
+        const cannedResponse = filterInput(content);
+        if (cannedResponse && !options.type) { // Only filter semantic searches, not explicit actions
+            // Wait a tiny bit for "typing" effect
+            await new Promise(r => setTimeout(r, 600));
+
+            const aiMsg: Message = {
+                id: crypto.randomUUID(),
+                role: 'ai',
+                content: cannedResponse
+            };
+            setMessages(prev => [...prev, aiMsg]);
+            setIsTyping(false);
+            return; // EXIT EARLY
+        }
+
+        const limit = options.limit || 2; // Increased to 2 per request
 
         try {
             // 2. Call Search API
@@ -153,7 +172,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                 body: JSON.stringify({
                     query: msg.originalQuery,
                     type: msg.searchType,
-                    limit: 1,
+                    limit: 2,
                     offset: msg.patches?.length || 0
                 }),
             });
@@ -178,7 +197,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
         }
     };
 
-    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const [selectedPatch, setSelectedPatch] = useState<PatchResult | null>(null);
 
     return (
         <section className="relative flex flex-col items-center justify-center h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-brand-teal/20 via-background to-background overflow-hidden px-4">
@@ -208,7 +227,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
                                                 <div
                                                     key={patch.id}
                                                     className="relative aspect-square bg-background/50 rounded-lg border border-border overflow-hidden group cursor-pointer hover:border-brand-teal transition-colors"
-                                                    onClick={() => setSelectedImage(patch.image_url)}
+                                                    onClick={() => setSelectedPatch(patch)}
                                                     title={patch.metadata?.unit_name || patch.description}
                                                 >
                                                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -294,25 +313,55 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
             </div>
 
             {/* Image Popup Modal */}
-            {selectedImage && (
+            {selectedPatch && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200"
-                    onClick={() => setSelectedImage(null)}
+                    onClick={() => setSelectedPatch(null)}
                 >
-                    <div className="relative max-w-4xl max-h-[90vh] w-full h-full flex items-center justify-center">
+                    <div className="relative max-w-4xl max-h-[95vh] w-full h-full flex flex-col items-center justify-center gap-4">
                         <button
-                            onClick={() => setSelectedImage(null)}
+                            onClick={() => setSelectedPatch(null)}
                             className="absolute top-4 right-4 text-white/70 hover:text-white bg-black/50 hover:bg-black/70 rounded-full p-2 transition-colors z-10"
                         >
                             <X size={32} />
                         </button>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                            src={selectedImage}
-                            alt="Full View"
-                            className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200"
-                            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking image
-                        />
+
+                        <div className="flex-1 w-full flex items-center justify-center min-h-0">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                                src={selectedPatch.image_url}
+                                alt="Full View"
+                                className="max-w-full max-h-full object-contain rounded-lg shadow-2xl animate-in zoom-in-95 duration-200"
+                                onClick={(e) => e.stopPropagation()}
+                            />
+                        </div>
+
+                        <Button
+                            className="bg-brand-gradient hover:opacity-90 transition-all font-bold px-8 py-6 text-lg rounded-full shadow-lg animate-in fade-in slide-in-from-bottom-4 duration-300 delay-150 animate-pulse-light btn-shine-hover"
+                            onClick={(e) => {
+                                e.stopPropagation();
+
+                                // ✅ PASS DATA TO CONFIGURATOR
+                                setUserImage(selectedPatch.image_url);
+
+                                // Auto-detect shape if metadata exists
+                                const metaShape = selectedPatch.metadata?.shape?.toLowerCase();
+                                if (['shield', 'circle', 'rectangle'].includes(metaShape)) {
+                                    setShape(metaShape);
+                                }
+
+                                setMessages(prev => [...prev, {
+                                    id: crypto.randomUUID(),
+                                    role: 'ai',
+                                    content: 'Launching configurator with this design...'
+                                }]);
+
+                                onOpenConfigurator();
+                                setSelectedPatch(null);
+                            }}
+                        >
+                            {t('orderNow')}
+                        </Button>
                     </div>
                 </div>
             )}

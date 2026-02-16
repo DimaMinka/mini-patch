@@ -85,6 +85,7 @@
             "about": "Tell me about Lizard",
             "contact": "How can I contact you?"
         },
+        "orderNow": "Order Now",
         "loadMore": "Load More",
         "found": "I found {count} patches matching \"{query}\":",
         "foundLatest": "Here are the latest {count} patches from our collection:",
