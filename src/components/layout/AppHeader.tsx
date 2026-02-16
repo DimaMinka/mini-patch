@@ -1,10 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, UploadCloud } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { Button } from '@/components/ui/button';
 import { usePatchStore } from '@/stores/usePatchStore';
 import { useTranslations } from 'next-intl';
 
@@ -13,6 +15,9 @@ export const AppHeader = () => {
     const dir = usePatchStore((state) => state.dir);
     const t = useTranslations('header');
     const setChatAction = usePatchStore((state) => state.setChatAction);
+    const pathname = usePathname();
+
+    const isUploadPage = pathname?.endsWith('/upload');
 
     const handleMobileAction = (action: string) => {
         setChatAction(action);
@@ -21,7 +26,6 @@ export const AppHeader = () => {
 
     const MENU_ITEMS = [
         { key: 'products', label: t('nav.products') },
-        { key: 'upload', label: t('nav.upload') },
         { key: 'gallery', label: t('nav.gallery') },
         { key: 'about', label: t('nav.about') },
         { key: 'contact', label: t('nav.contact') },
@@ -36,17 +40,9 @@ export const AppHeader = () => {
                 </Link>
 
                 {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center gap-6 mx-6 flex-1">
-                    {MENU_ITEMS.map((item) => (
-                        item.key === 'upload' ? (
-                            <Link
-                                key={item.key}
-                                href="/upload"
-                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer"
-                            >
-                                {item.label}
-                            </Link>
-                        ) : (
+                {!isUploadPage && (
+                    <nav className="hidden md:flex items-center gap-6 mx-6 flex-1">
+                        {MENU_ITEMS.map((item) => (
                             <button
                                 key={item.key}
                                 onClick={() => setChatAction(item.key)}
@@ -54,20 +50,31 @@ export const AppHeader = () => {
                             >
                                 {item.label}
                             </button>
-                        )
-                    ))}
-                </nav>
+                        ))}
+                    </nav>
+                )}
 
-                <div className="flex flex-1 md:flex-none items-center justify-end gap-2">
-                    <nav className="flex items-center gap-1">
+                <div className="flex flex-1 items-center justify-end gap-0.5">
+                    <nav className="flex items-center gap-0">
                         <LanguageSwitcher />
                         <ThemeToggle />
-                        <button
-                            className="md:hidden p-2 rounded-md hover:bg-muted"
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
-                        >
-                            {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-                        </button>
+                        <Button variant="ghost" size="icon-sm" asChild>
+                            <Link
+                                href="/upload"
+                                className="text-foreground transition-colors"
+                                title={t('nav.upload')}
+                            >
+                                <UploadCloud className="h-[1.2rem] w-[1.2rem]" />
+                            </Link>
+                        </Button>
+                        {!isUploadPage && (
+                            <button
+                                className="md:hidden p-2 rounded-md hover:bg-muted"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            >
+                                {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+                            </button>
+                        )}
                     </nav>
                 </div>
             </div>
@@ -77,24 +84,13 @@ export const AppHeader = () => {
                 <div className="md:hidden absolute top-16 left-0 w-full bg-background border-b shadow-xl p-4 animate-in slide-in-from-top-2 duration-200 z-50">
                     <nav className="flex flex-col gap-4">
                         {MENU_ITEMS.map((item) => (
-                            item.key === 'upload' ? (
-                                <Link
-                                    key={item.key}
-                                    href="/upload"
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="text-lg font-medium text-start px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    {item.label}
-                                </Link>
-                            ) : (
-                                <button
-                                    key={item.key}
-                                    onClick={() => handleMobileAction(item.key)}
-                                    className="text-lg font-medium text-start px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
-                                >
-                                    {item.label}
-                                </button>
-                            )
+                            <button
+                                key={item.key}
+                                onClick={() => handleMobileAction(item.key)}
+                                className="text-lg font-medium text-start px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
+                            >
+                                {item.label}
+                            </button>
                         ))}
                     </nav>
                 </div>

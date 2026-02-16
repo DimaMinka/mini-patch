@@ -21,11 +21,19 @@ export default function UploadPage() {
     const [isValidating, setIsValidating] = useState(false);
 
     useEffect(() => {
-        const saved = localStorage.getItem('upload-password');
+        const saved = sessionStorage.getItem('upload-password');
         if (saved) {
             setUserPassword(saved);
             verifyPassword(saved);
         }
+
+        // Cleanup local form state when leaving page
+        return () => {
+            setFile(null);
+            setPreviewUrl(null);
+            setDescription('');
+            setResult(null);
+        };
     }, []);
 
     const verifyPassword = async (pass: string) => {
@@ -49,8 +57,14 @@ export default function UploadPage() {
 
     const handlePasswordChange = (val: string) => {
         setUserPassword(val);
-        localStorage.setItem('upload-password', val);
+        sessionStorage.setItem('upload-password', val);
         verifyPassword(val);
+    };
+
+    const handleLogout = () => {
+        setUserPassword('');
+        sessionStorage.removeItem('upload-password');
+        setIsAuthorized(false);
     };
 
     const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,12 +162,22 @@ export default function UploadPage() {
                             <Lock className={`w-4 h-4 ${isAuthorized ? 'text-green-500' : 'text-primary'}`} />
                             <span>Access Password</span>
                         </div>
-                        {isValidating && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
-                        {!isValidating && userPassword && (
-                            <span className={`text-xs font-bold ${isAuthorized ? 'text-green-500' : 'text-red-500'}`}>
-                                {isAuthorized ? '✓ Authorized' : '✗ Incorrect'}
-                            </span>
-                        )}
+                        <div className="flex items-center gap-3">
+                            {isValidating && <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />}
+                            {!isValidating && userPassword && (
+                                <span className={`text-xs font-bold ${isAuthorized ? 'text-green-500' : 'text-red-500'}`}>
+                                    {isAuthorized ? '✓ Authorized' : '✗ Incorrect'}
+                                </span>
+                            )}
+                            {isAuthorized && (
+                                <button
+                                    onClick={handleLogout}
+                                    className="text-xs text-muted-foreground hover:text-red-500 transition-colors underline underline-offset-2"
+                                >
+                                    Logout
+                                </button>
+                            )}
+                        </div>
                     </div>
                     <Input
                         type="password"

@@ -30,7 +30,7 @@ export const LanguageSwitcher = () => {
             variant="ghost"
             size="sm"
             onClick={toggleLanguage}
-            className="w-12 px-0 font-bold"
+            className="w-auto px-1.5 font-bold"
             title={`Current: ${locale.toUpperCase()}`}
         >
             <span className="text-lg me-1">{getFlag(locale)}</span>
