@@ -40,3 +40,28 @@ export interface ChatMessage {
     role: 'user' | 'assistant';
     content: string;
 }
+
+// ── Metadata Extraction ─────────────────────────────
+export type PatchCategory = 'military' | 'medical' | 'police' | 'fire' | 'school' | 'security' | 'other';
+
+export interface PatchMetadata {
+    category: PatchCategory;
+    organization: string | null;
+    unit: string | null;
+    battalion: string | null;
+    unit_name: string | null;
+    shape: string | null;
+    colors: string[];
+    features: string[];
+    search_content: string;
+}
+
+// ── Database Record ─────────────────────────────────
+export interface PatchRecord {
+    id: string;
+    image_path: string;
+    image_url: string;
+    description: string;
+    metadata: PatchMetadata | null;
+    created_at: string;
+}

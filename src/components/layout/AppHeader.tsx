@@ -21,6 +21,7 @@ export const AppHeader = () => {
 
     const MENU_ITEMS = [
         { key: 'products', label: t('nav.products') },
+        { key: 'upload', label: t('nav.upload') },
         { key: 'gallery', label: t('nav.gallery') },
         { key: 'about', label: t('nav.about') },
         { key: 'contact', label: t('nav.contact') },
@@ -37,13 +38,23 @@ export const AppHeader = () => {
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex items-center gap-6 mx-6 flex-1">
                     {MENU_ITEMS.map((item) => (
-                        <button
-                            key={item.key}
-                            onClick={() => setChatAction(item.key)}
-                            className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer"
-                        >
-                            {item.label}
-                        </button>
+                        item.key === 'upload' ? (
+                            <Link
+                                key={item.key}
+                                href="/upload"
+                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer"
+                            >
+                                {item.label}
+                            </Link>
+                        ) : (
+                            <button
+                                key={item.key}
+                                onClick={() => setChatAction(item.key)}
+                                className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary cursor-pointer"
+                            >
+                                {item.label}
+                            </button>
+                        )
                     ))}
                 </nav>
 
@@ -66,13 +77,24 @@ export const AppHeader = () => {
                 <div className="md:hidden absolute top-16 left-0 w-full bg-background border-b shadow-xl p-4 animate-in slide-in-from-top-2 duration-200 z-50">
                     <nav className="flex flex-col gap-4">
                         {MENU_ITEMS.map((item) => (
-                            <button
-                                key={item.key}
-                                onClick={() => handleMobileAction(item.key)}
-                                className="text-lg font-medium text-start px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
-                            >
-                                {item.label}
-                            </button>
+                            item.key === 'upload' ? (
+                                <Link
+                                    key={item.key}
+                                    href="/upload"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="text-lg font-medium text-start px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
+                                >
+                                    {item.label}
+                                </Link>
+                            ) : (
+                                <button
+                                    key={item.key}
+                                    onClick={() => handleMobileAction(item.key)}
+                                    className="text-lg font-medium text-start px-4 py-2 rounded-lg hover:bg-muted text-muted-foreground hover:text-primary transition-colors"
+                                >
+                                    {item.label}
+                                </button>
+                            )
                         ))}
                     </nav>
                 </div>

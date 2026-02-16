@@ -3,6 +3,7 @@
         "title": "LIZARD",
         "nav": {
             "products": "Products",
+            "upload": "Upload",
             "gallery": "Gallery",
             "about": "About",
             "contact": "Contact"
@@ -59,6 +60,14 @@
     "submit": {
         "button": "Submit Order",
         "processing": "Processing..."
+    },
+    "upload": {
+        "title": "Upload Patch",
+        "subtitle": "Add a new patch to the collection",
+        "dragDrop": "Drag & drop an image here, or click to select",
+        "descriptionPlaceholder": "Describe the patch (e.g., 'Blue shield, police, border guard...')",
+        "analyzing": "Analyzing with AI...",
+        "submit": "Save Patch"
     },
     "language": {
         "label": "Language",

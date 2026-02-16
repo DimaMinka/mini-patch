@@ -3,6 +3,7 @@
         "title": "LIZARD",
         "nav": {
             "products": "מוצרים",
+            "upload": "העלאה",
             "gallery": "גלריה",
             "about": "אודות",
             "contact": "צור קשר"
@@ -59,6 +60,14 @@
     "submit": {
         "button": "בצע הזמנה",
         "processing": "מעבד..."
+    },
+    "upload": {
+        "title": "העלאת פאץ'",
+        "subtitle": "הוסף פאץ' חדש לאוסף",
+        "dragDrop": "גרור ושחרר תמונה כאן, או לחץ לבחירה",
+        "descriptionPlaceholder": "תאר את הפאץ' (למשל, 'מגן כחול, משטרה, משמר הגבול...')",
+        "analyzing": "מנתח באמצעות AI...",
+        "submit": "שמור פאץ'"
     },
     "language": {
         "label": "שפה",
