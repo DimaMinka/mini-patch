@@ -33,9 +33,9 @@ export const SIZE_PRESETS: Record<string, PatchSize> = {
 
 // ── Materials & Textures ────────────────────────────
 export const TEXTURE_MAP: Record<PatchMaterial, { src: string; opacity: number; label: string }> = {
-    cordura: { src: '/textures/cordura-1000d.png', opacity: 0.6, label: 'Cordura 1000D' },
-    pvc: { src: '/textures/pvc.png', opacity: 0.4, label: 'PVC Rubber' },
-    embroidery: { src: '/textures/embroidery.png', opacity: 0.5, label: 'Embroidery' },
+    cordura: { src: '/mini-patch/textures/cordura-1000d.png', opacity: 0.6, label: 'Cordura 1000D' },
+    pvc: { src: '/mini-patch/textures/pvc.png', opacity: 0.4, label: 'PVC Rubber' },
+    embroidery: { src: '/mini-patch/textures/embroidery.png', opacity: 0.5, label: 'Embroidery' },
 };
 
 // ── Defaults ────────────────────────────────────────

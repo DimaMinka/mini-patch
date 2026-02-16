@@ -62,7 +62,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
         const content = contentOverride || inputValue;
         if (!content.trim()) return;
 
-        const userMsg: Message = { id: Date.now().toString(), role: 'user', content };
+        const userMsg: Message = { id: crypto.randomUUID(), role: 'user', content };
         setMessages(prev => [...prev, userMsg]);
         if (!contentOverride) setInputValue('');
         setIsTyping(true);
@@ -71,7 +71,7 @@ export const HeroChat = ({ onOpenConfigurator }: HeroChatProps) => {
         setTimeout(() => {
             setIsTyping(false);
             const aiMsg: Message = {
-                id: (Date.now() + 1).toString(),
+                id: crypto.randomUUID(),
                 role: 'ai',
                 content: "Applying the Lizard style... Here's a concept based on your idea.",
                 showPatch: true
